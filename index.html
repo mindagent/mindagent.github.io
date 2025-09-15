@@ -53,7 +53,41 @@ a {
   width: 100%;
   height: 100%;
 }
+/* --- Citation box + copy button --- */
+.cite-box {
+    background: #f7f7f9;
+    border: 1px solid #e6e6ea;
+    border-radius: 10px;
+    margin: 0;                 /* no external margin */
+    padding-left: 1rem;
+    position: relative;
+    overflow-x: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 0.9em;
+    line-height: 1.45;
+    white-space: pre;
+    text-align: left;
+}
+.cite-actions {
+    display: flex;
+    gap: .5rem;
+    margin-bottom: .75rem;
+}
 
+.news-item + .news-item {
+    border-top: 1px solid #eee;
+    margin-top: .75rem;
+    padding-top: .75rem;
+}
+.news-pill {
+    display: inline-block;
+    font-size: 0.8rem;
+    padding: .15rem .5rem;
+    border-radius: 999px;
+    background: #eef6ff;
+    border: 1px solid #d6e6ff;
+    margin-left: .35rem;
+}
 </style>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
@@ -76,6 +110,19 @@ function UpdateTaskDemonstration() {
   video.src = "assets/" + "demo-" + task + ".mp4"
   video.playbackRate = 1.75;
   video.play();
+}
+function copyTextFrom(id, btnId){
+    const el = document.getElementById(id);
+    const btn = document.getElementById(btnId);
+    if (!el) return;
+    const text = el.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        if (btn){
+            const old = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> Copied';
+            setTimeout(() => btn.innerHTML = old, 1200);
+        }
+    });
 }
 </script>
 
@@ -299,6 +346,97 @@ language corpora.
       </div>
     </div>
   </section>
+
+
+<!-- =========================
+     Cite Our Paper
+========================= -->
+<section id="cite" class="section">
+    <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Cite our paper</h2>
+
+                <!-- Quick citation (plain text) -->
+                <div class="box is-shadowless" style="border-radius: 10px;">
+                    <div class="cite-actions">
+                        <button id="copy-bibtex" class="button is-dark is-rounded" onclick="copyTextFrom('citation-bibtex','copy-bibtex')">
+                            <i class="fas fa-copy"></i> Copy BibTeX
+                        </button>
+                        <a class="button is-dark is-rounded" target="_blank" href="https://arxiv.org/abs/2309.09971">
+                            <span class="icon"><i class="fas fa-file"></i></span><span>arXiv</span>
+                        </a>
+                        <a class="button is-dark is-rounded" target="_blank" href="https://github.com/mindagent/mindagent">
+                            <span class="icon"><i class="fab fa-github"></i></span><span>Code</span>
+                        </a>
+                    </div>
+
+                    <!-- BibTeX -->
+                    <div style="height: .75rem;"></div>
+                    <div id="citation-bibtex" class="cite-box" aria-label="BibTeX citation">
+@misc{gong2023mindagentemergentgaminginteraction,
+title={MindAgent: Emergent Gaming Interaction},
+author={Ran Gong and Qiuyuan Huang and Xiaojian Ma and Hoi Vo and Zane Durante and Yusuke Noda and Zilong Zheng and Song-Chun Zhu and Demetri Terzopoulos and Li Fei-Fei and Jianfeng Gao},
+year={2023},
+eprint={2309.09971},
+archivePrefix={arXiv},
+primaryClass={cs.AI},
+url={https://arxiv.org/abs/2309.09971},
+}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================
+     News & Updates
+========================= -->
+<section id="news" class="section" style="padding-top: 0;">
+    <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">News</h2>
+
+                <!-- Follow-up highlight card -->
+                <div class="card" style="border-radius: 12px; overflow: hidden; margin-bottom: 1rem;">
+                    <header class="card-header">
+                        <p class="card-header-title">
+                            Follow-up work <span class="news-pill">new</span>
+                        </p>
+                    </header>
+                    <div class="card-content">
+                        <div class="columns is-vcentered">
+
+                            <!-- Left: text -->
+                            <div class="column is-two-thirds">
+                                <div class="content" style="text-align: left;">
+                                    <strong><em>TeamCraft:</em> A Benchmark for Multi-Modal Multi-Agent Systems in Minecraft<br></strong>
+                                    <strong>Links:</strong>
+                                    <a target="_blank" href="https://teamcraft-bench.github.io">Project Page</a> ·
+                                    <a target="_blank" href="https://arxiv.org/abs/2412.05255">Paper</a> ·
+                                    <a target="_blank" href="https://github.com/teamcraft-bench/teamcraft">Code</a>
+                                    <br>
+                                </div>
+                            </div>
+
+                            <!-- Right: image -->
+                            <div class="column is-one-third has-text-centered">
+                                <figure class="image" style="margin: auto;">
+                                    <img src="assets/teamcraft_main.jpg" alt="TeamCraft preview">
+                                </figure>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
 
 
 
